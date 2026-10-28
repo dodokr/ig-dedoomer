@@ -17,4 +17,4 @@ Start with SQLite for both. It is one file each, with no extra service.
 - Fewer moving parts for the first working version.
 - If the setup grows (many rooms, long history, several users), migrate Synapse to Postgres, ideally before much data has accumulated. Synapse ships a migration script.
 - For a single user on a home PC with media retention enabled, SQLite is expected to be fine. Revisit if "database is locked" errors appear or Synapse feels slow.
-- The filter bot does not need a database.
+- A future bot that only reads events does not need a database.

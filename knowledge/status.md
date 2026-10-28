@@ -4,37 +4,33 @@
 
 ## State
 
-- Phases 0-3 done (see `../docs/roadmap.md`): stack ran locally, Instagram logged in via cookies, double puppeting enabled, message formats mapped.
-- Phase 4a (filter bot + ntfy) **not started**. No filter code and no ntfy container exist yet.
-- Docker daemon was **not running** on 2026-10-28 (machine rebooted). User must run `! sudo systemctl start docker`.
-- Git repo exists, **no commits yet**.
-- Last live check of the stack: 2026-10-12 (not re-verified since).
+- Runs on the home PC (`ssh <pc>`, project `~/Projects/side-projects/ig-dedoomer`). Real server name and host details: `local.md` (git-ignored). The laptop copy is retired; its bridge DB was deleted.
+- Synapse **recreated 2026-10-28** with `server_name: <server-name>` (was `localhost`). Old data in `backups/2026-10-28-localhost/` (git-ignored).
+- `tailscale serve --bg 8008` -> `https://<server-name>` (tailnet only). `/.well-known/matrix/client` served by Synapse. Native sliding sync and password login advertised.
+- Bridge re-logged in with cookies; double puppeting set; 16 portals at last check. Backfill enabled (see `stack.md`).
+- User reads and replies in **Element X on iPhone** - works (user-confirmed 2026-10-28).
+- `media_retention.local_media_lifetime: 30d` applied.
+- Recurring harmless bridge log errors: `last read message not found` (read receipts for events the bridge never saw), `cannot change members for DM`.
+- Git: first commit 089b60a; this session's doc changes uncommitted.
 
 ## Decisions made
 
 - Instagram bridge image: `dock.mau.dev/mautrix/meta:ig-latest` (`docs/decisions/0001`).
-- SQLite for Synapse and bridge while local (`0002`).
+- SQLite for Synapse and bridge (`0002`).
 - **Host on the user's home PC**, not a VPS, to keep a residential IP (`0003`).
-- Notifications via ntfy + filter bot; Element X optional (`0004`).
-- Reels are kept; plan to add Synapse `media_retention` (e.g. 30d) at deployment (`0005`). Not yet applied.
-- Reels/posts: placeholder notification for the first version. No LLM step yet.
+- ~~ntfy + filter bot~~ (`0004`, superseded).
+- Reels are kept, expire via media retention (`0005`).
+- **Element X over Tailscale is the main app; server name = Tailscale name** (`0006`).
 
 ## Open items
 
-- [ ] Verify the cookie cURL message in the bot DM was redacted (it holds Instagram session cookies).
-- [ ] An admin Matrix access token was pasted in a chat on 2026-10-09. Log out that session / rotate before any non-local deployment (`../docs/security.md`).
+- [ ] Remove the stale serve entry for the old machine name (user, sudo): `tailscale serve reset && tailscale serve --bg 8008`.
+- [ ] `sudo systemctl enable docker` (and `tailscaled`) on the PC; verify after a reboot.
+- [ ] User confirms the cookie message in the bot DM was removed.
 - [ ] Ask a friend to send a plain photo, a voice note, a story reply, a sticker -> sample them, fill `message-formats.md`.
-- [ ] Make the first git commit (docs, compose, config-examples, element/config.json).
+- [ ] Decide when to delete `backups/2026-10-28-localhost/` (holds old DMs and the old IG session cookies message).
+- [ ] UNVERIFIED: Element X pusher payload format (event-id-only or full content via the push gateway).
 
 ## Next step
 
-Phase 4a: add `ntfy` to `docker-compose.yml`; write a Python (`matrix-nio`) bot that logs in as its own Matrix user, watches bridged rooms, and:
-- plain `m.text` -> push with sender + text
-- reel/post (see `message-formats.md`) -> placeholder push
-- unknown types -> generic placeholder
-- ignore own messages and bridge-bot messages
-Unit tests built from real event shapes. Open questions still unanswered by the user: LLM for reel summaries (Claude API vs local) is deferred to Phase 4b; output for v1 = ntfy push + local log file.
-
-## Later (home deployment)
-
-Docker enabled at boot, fixed LAN address, Tailscale for remote access, ntfy upstream via ntfy.sh for iPhone push (UNVERIFIED, check ntfy docs), `media_retention`, backups.
+Open items above. After that, the optional feed bot (`../docs/roadmap.md`, Later): posts "<friend> sent <type>" plus the media into a separate non-bridged room. The user has not yet confirmed they want it in addition to Element X's notifications.

@@ -1,6 +1,6 @@
 # 0005. Keep reels in Synapse, expire them with media retention
 
-Date: 2026-10-28 - Status: accepted, not yet applied
+Date: 2026-10-28 - Status: accepted, applied 2026-10-28 (`local_media_lifetime: 30d`)
 
 ## Context
 
@@ -25,4 +25,4 @@ Lifetime counts from the last access, or from creation if the file was never ope
 - After expiry the message stays in the room but its video no longer loads; the original is still reachable through the `external_url` link to Instagram.
 - A reel you watched recently stays; one nobody opened expires.
 - Protected or quarantined media is exempt from purging.
-- Not applied locally yet. Add it to `synapse/homeserver.yaml` and `config-examples/` when deploying.
+- Applied on the home PC when Synapse was recreated ([0006](0006-element-x-over-tailscale.md)); also in `config-examples/`.

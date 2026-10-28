@@ -21,8 +21,7 @@ Run everything on the user's always-on home PC, so Instagram sees the same resid
 
 ## Consequences
 
-- Remote access goes through Tailscale. Phone push goes through self-hosted ntfy forwarding via ntfy.sh's upstream relay (to be verified against the ntfy docs when we get there).
-- Element X (needs a public HTTPS server) is out of scope for now. See [roadmap](../roadmap.md).
+- Remote access goes through Tailscale. The phone uses Element X against Synapse's Tailscale HTTPS address; see [0006](0006-element-x-over-tailscale.md).
 - The PC must stay on, and Docker must start at boot. If the home IP changes (ISP), expect Instagram to notice; keep it stable where possible.
 - Keep activity low: read-mostly, no extra scrapers, no repeated logins.
 - If the PC cannot be always on later, fall back to a VPS plus a static residential proxy, not a plain VPS or a VPN.

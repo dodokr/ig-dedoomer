@@ -206,8 +206,8 @@ bridge:
     #   domain - All users on that homeserver
     #     mxid - Specific user
     permissions:
-        "localhost": user
-        "@admin:localhost": admin
+        "<server-name>": user
+        "@admin:<server-name>": admin
 
 # Config for the bridge's database.
 database:
@@ -235,7 +235,7 @@ homeserver:
     # but https also works if they run on different machines.
     address: http://synapse:8008
     # The domain of the homeserver (also known as server_name, used for MXIDs, etc).
-    domain: localhost
+    domain: <server-name>
     
     # What software is the homeserver running?
     # Standard Matrix homeservers like Synapse, Dendrite and Conduit should just use "standard" here.
@@ -409,7 +409,7 @@ direct_media:
 # See https://docs.mau.fi/bridges/general/backfill.html for more details.
 backfill:
     # Whether to do backfilling at all.
-    enabled: false
+    enabled: true
     # Maximum number of messages to backfill in empty rooms.
     # If this is zero or negative, backfill will be disabled in new rooms.
     max_initial_messages: 50

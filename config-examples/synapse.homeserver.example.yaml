@@ -9,7 +9,7 @@
 # For more information on how to configure Synapse, including a complete accounting of
 # each option, go to docs/usage/configuration/config_documentation.md or
 # https://element-hq.github.io/synapse/latest/usage/configuration/config_documentation.html
-server_name: "localhost"
+server_name: "<server-name>"
 pid_file: /data/homeserver.pid
 listeners:
   - port: 8008
@@ -25,21 +25,25 @@ database:
   name: sqlite3
   args:
     database: /data/homeserver.db
-log_config: "/data/localhost.log.config"
+log_config: "/data/<server-name>.log.config"
 media_store_path: /data/media_store
 registration_shared_secret: "CHANGE_ME"
 report_stats: false
 macaroon_secret_key: "CHANGE_ME"
 form_secret: "CHANGE_ME"
-signing_key_path: "/data/localhost.signing.key"
+signing_key_path: "/data/<server-name>.signing.key"
 trusted_key_servers:
   - server_name: "matrix.org"
 
-# --- local dev overrides ---
+# --- ig-dedoomer additions ---
+public_baseurl: "https://<server-name>/"
+serve_client_wellknown: true      # Element X discovers the server from its name
 enable_registration: false
 federation_domain_whitelist: []   # local only, no federation
 app_service_config_files:
   - /data/registration-instagram.yaml
+media_retention:
+  local_media_lifetime: 30d       # see docs/decisions/0005
 
 
 # vim:ft=yaml

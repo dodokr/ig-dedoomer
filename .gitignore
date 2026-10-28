@@ -3,3 +3,6 @@ bridge/
 synapse/
 data/
 samples/
+backups/
+knowledge/local.md
+element/config.json

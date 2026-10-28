@@ -27,4 +27,4 @@ Careful with `m.text` events whose body is a cURL command or other secret (the I
 
 ## Media id -> file
 
-`mxc://localhost/<media_id>` -> `synapse/media_store/local_content/<media_id[0:2]>/<media_id[2:4]>/<media_id[4:]>`. Check `media_type` in `local_media_repository`, and copy to `samples/<name>.mp4` (ignored by git) to play it with `mpv`.
+`mxc://<server-name>/<media_id>` -> `synapse/media_store/local_content/<media_id[0:2]>/<media_id[2:4]>/<media_id[4:]>`. Check `media_type` in `local_media_repository`, and copy to `samples/<name>.mp4` (ignored by git) to play it with `mpv`.

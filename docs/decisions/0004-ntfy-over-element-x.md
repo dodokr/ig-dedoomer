@@ -1,6 +1,6 @@
 # 0004. Notify through a filter bot and ntfy; Element X is optional
 
-Date: 2026-10-09 - Status: accepted
+Date: 2026-10-09 - Status: **superseded** by [0006](0006-element-x-over-tailscale.md) on 2026-10-28. Kept for history; the assumption that Element X needs a public HTTPS server turned out wrong (Tailscale Serve provides private HTTPS).
 
 ## Context
 

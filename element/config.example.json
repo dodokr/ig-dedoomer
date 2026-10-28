@@ -1,0 +1,11 @@
+{
+  "default_server_config": {
+    "m.homeserver": {
+      "base_url": "https://<server-name>",
+      "server_name": "<server-name>"
+    }
+  },
+  "disable_guests": true,
+  "disable_custom_urls": true,
+  "brand": "Element (ig-dedoomer)"
+}
