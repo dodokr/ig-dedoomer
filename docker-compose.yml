@@ -1,0 +1,35 @@
+# Local dev stack: Synapse + mautrix-meta (Instagram) + Element Web.
+# Everything binds to 127.0.0.1 only.
+services:
+  synapse:
+    image: matrixdotorg/synapse:latest
+    user: "${LOCAL_UID}:${LOCAL_GID}"
+    restart: unless-stopped
+    volumes:
+      - ./synapse:/data
+    ports:
+      - "127.0.0.1:8008:8008"
+    healthcheck:
+      test: ["CMD", "curl", "-fSs", "http://localhost:8008/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  bridge:
+    image: dock.mau.dev/mautrix/meta:ig-latest
+    user: "${LOCAL_UID}:${LOCAL_GID}"
+    restart: unless-stopped
+    depends_on:
+      synapse:
+        condition: service_healthy
+    volumes:
+      - ./bridge:/data
+    command: ["/usr/bin/mautrix-meta", "-c", "/data/config.yaml", "-r", "/data/registration.yaml", "--no-update"]
+
+  element:
+    image: vectorim/element-web:latest
+    restart: unless-stopped
+    volumes:
+      - ./element/config.json:/app/config.json:ro
+    ports:
+      - "127.0.0.1:8080:80"
